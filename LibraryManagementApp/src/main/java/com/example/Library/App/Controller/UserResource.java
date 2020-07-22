@@ -6,6 +6,7 @@ import com.example.Library.App.Exception.BookNotFoundException;
 import com.example.Library.App.Exception.UserNameMissingException;
 import com.example.Library.App.Exception.UserNotFoundException;
 import com.example.Library.App.Util.UserValidator;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +24,13 @@ public class UserResource {
     UserValidator validator=new UserValidator();
 
     // Find
+    @ApiOperation(value = "To see the list of all Users")
     @GetMapping("/users")
     List<User> findAll() {
         return repository.findAll();
     }
 
+    @ApiOperation(value = "To add a new User")
     @PostMapping("/users")
     //return 201 instead of 200
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,6 +44,7 @@ public class UserResource {
     }
 
     // Find a given user
+    @ApiOperation(value = "To get a User by Id")
     @GetMapping("/users/{id}")
     User findOne(@PathVariable int id) {
         LOGGER.info("/users/{id} called with id "+ id);

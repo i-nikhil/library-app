@@ -2,6 +2,7 @@ package com.example.Library.App.Controller;
 
 import com.example.Library.App.DataAccessLayer.IssuedBooks;
 import com.example.Library.App.DataAccessLayer.IssuedBooksRepository;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,13 @@ public class IssuedBooksResource {
     @Autowired
     IssuedBooksRepository repository;
 
-
+    @ApiOperation(value = "To see list of all issued books")
     @GetMapping("/issuedBooks")
     List<IssuedBooks> findAll() {
         return repository.findAll();
     }
 
+    @ApiOperation(value = "To issue a new book")
     @PostMapping(value = "/issueBook")
     @ResponseStatus(HttpStatus.CREATED)
     public IssuedBooks issueBook(@RequestBody IssuedBooks issuedBooks) throws Exception{
@@ -34,6 +36,7 @@ public class IssuedBooksResource {
         }
     }
     //http://localhost:8080/searchIssuedBooksByUser?q=1234
+    @ApiOperation(value = "To search an issued book by User")
     @GetMapping(value = "/searchIssuedBooksByUser")
     public List<IssuedBooks> searchIssuedBooksByUser(@RequestParam(value = "q") String userId){
         LOGGER.info("searchIssuedBooksByUser called with userId "+userId);

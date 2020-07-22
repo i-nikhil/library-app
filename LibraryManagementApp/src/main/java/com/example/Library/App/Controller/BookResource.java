@@ -7,6 +7,7 @@ import com.example.Library.App.DataAccessLayer.UserRepository;
 import com.example.Library.App.Exception.BookNotFoundException;
 import com.example.Library.App.Exception.BookTitleMissingException;
 import com.example.Library.App.Util.BookValidator;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class BookResource {
     BookValidator validator = new BookValidator();
 
     // Find All books
+    @ApiOperation(value = "To see list of all books")
     @GetMapping("/books")
     List<Book> findAll() {
         LOGGER.info("findAll called");
@@ -48,6 +50,7 @@ public class BookResource {
         return list;
     }
 
+    @ApiOperation(value = "To add a new book")
     @PostMapping("/books")
     //return 201 instead of 200
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,6 +64,7 @@ public class BookResource {
         }
     }
     //http://localhost:8080/searchBooksByAuthor?q=Kim
+    @ApiOperation(value = "To search a book by its Author")
     @GetMapping(value = "/searchBooksByAuthor")
     public List<Book> searchBooksByAuthor(@RequestParam(value = "q") String author){
         List<Book> books = repository.findAll();
@@ -71,6 +75,7 @@ public class BookResource {
         return list;
     }
     //http://localhost:8080/searchBooksBySubject?q=Maths
+    @ApiOperation(value = "To search a book by its Subject")
     @GetMapping(value = "/searchBooksBySubject")
     public List<Book> searchBooksBySubject(@RequestParam(value = "q") String subject){
         List<Book> books = repository.findAll();
